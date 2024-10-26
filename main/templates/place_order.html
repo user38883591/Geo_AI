@@ -1,0 +1,8 @@
+<h1>Place Order for {{ product.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="quantity" min="1" value="1">
+    <p>Total Price: ${{ product.price }}</p>
+    <button type="submit">Confirm Order</button>
+</form>

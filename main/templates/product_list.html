@@ -1,0 +1,20 @@
+<h1>Product List</h1>
+<ul>
+    {% for product in products %}
+        <li>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p>Price: KSH{{ product.price }}</p>
+            
+            {% if product.id %}
+                <form action="{% url 'place_order' product.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" min="1" value="1">
+                    <button type="submit">Buy Now</button>
+                </form>
+            {% else %}
+                <p>Product ID not available for ordering.</p>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

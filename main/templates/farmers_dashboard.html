@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ request.user.username }}</h1>
+
+    <!-- Section: Weather Data -->
+    <section>
+        <h2>Weather Insights</h2>
+        <form method="GET" action="{% url 'farmers_dashboard' %}">
+            <label for="city">Enter your city:</label>
+            <input type="text" name="city" id="city" placeholder="City name" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if weather_data %}
+            <img src="http://openweathermap.org/img/wn/{{ weather_data.weather.0.icon }}@2x.png" alt="Weather icon">
+            <h3>Weather in {{ city }}</h3>
+            <p>Temperature: {{ weather_data.main.temp }} °C</p>
+            <p>Weather: {{ weather_data.weather.0.description }}</p>
+            <p>Humidity: {{ weather_data.main.humidity }}%</p>
+            <p>Wind Speed: {{ weather_data.wind.speed }} m/s</p>
+            
+        {% elif city %}
+            <p>Could not retrieve weather data for {{ city }}.</p>
+        {% endif %}
+    </section>
+
+    <!-- Section: Available Products -->
+    <section>
+        <h2>Available Products</h2>
+        <ul>
+            {% for product in products %}
+                <li>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>Price: KSH {{ product.price }}</p>
+                    <a href="{% url 'product_details' product.id %}">View Details</a>
+                </li>
+            {% empty %}
+                <p>No products available at the moment.</p>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- Section: Order History -->
+    <section>
+        <h2>Your Orders</h2>
+        <ul>
+            {% for order in orders %}
+                <li>
+                    <h4>Product: {{ order.product.name }}</h4>
+                    <p>Quantity: {{ order.quantity }}</p>
+                    <p>Total Price: KSH {{ order.total_price }}</p>
+                    <p>Order Date: {{ order.order_date }}</p>
+                </li>
+            {% empty %}
+                <p>You haven't placed any orders yet.</p>
+            {% endfor %}
+        </ul>
+    </section>
+
+</body>
+</html>
