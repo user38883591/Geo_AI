@@ -2,10 +2,10 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.conf import settings
 import numpy as np
-from .models import LeafImage,Product, Order,Commission,Profile,Supplier
+from .models import LeafImage,Crop_recomendations,Product, Order,Commission,Profile,Supplier
 from .serializers import LeafImageSerializer, ImageUploadSerializer 
 from django.shortcuts import render, redirect,get_object_or_404
-from .forms import LeafDiseaseForm,SupplierForm,UserRegisterForm,ProductForm
+from .forms import LeafDiseaseForm,SupplierForm,UserRegisterForm,ProductForm,CropRecommendationForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -155,6 +155,54 @@ def predict_image(image):
     return predicted_class_name
 
 #market place views
+
+
+
+from .model_file import make_prediction  # Import the make_prediction function from the file where you load the model and scalers
+
+crop_dict = {
+    1: "Rice", 2: "Maize", 3: "Jute", 4: "Cotton", 5: "Coconut", 6: "Papaya", 7: "Orange",
+    8: "Apple", 9: "Muskmelon", 10: "Watermelon", 11: "Grapes", 12: "Mango", 13: "Banana",
+    14: "Pomegranate", 15: "Lentil", 16: "Blackgram", 17: "Mungbean", 18: "Mothbeans",
+    19: "Pigeonpeas", 20: "Kidneybeans", 21: "Chickpea", 22: "Coffee"
+}
+
+def predict_view(request):
+    result = None
+    past_predictions = Crop_recomendations.objects.all().order_by('-prediction_date')[:10]  # Last 10 predictions
+
+    if request.method == 'POST':
+        form = CropRecommendationForm(request.POST)
+        if form.is_valid():
+            # Get cleaned data from the form
+            input_features = [
+                form.cleaned_data['nitrogen'],
+                form.cleaned_data['phosphorus'],
+                form.cleaned_data['potassium'],
+                form.cleaned_data['temperature'],
+                form.cleaned_data['humidity'],
+                form.cleaned_data['ph'],
+                form.cleaned_data['rainfall'],
+            ]
+
+            # Make a prediction
+            prediction = make_prediction(input_features)
+            predicted_index = prediction[0]
+            result = crop_dict.get(predicted_index, "Unknown")  # Map the index to crop name
+
+            # Save prediction to the database
+            saved_prediction = form.save(commit=False)
+            saved_prediction.recommended_crop = result
+            saved_prediction.save()
+
+    else:
+        form = CropRecommendationForm()
+
+    return render(request, 'crop_recommendation.html', {
+        'form': form,
+        'result': result,
+        'past_predictions': past_predictions
+    })
 
 @login_required
 def add_product(request):

@@ -1,5 +1,5 @@
 from django import forms
-from .models import LeafImage,Supplier,Product
+from .models import LeafImage,Supplier,Product,Crop_recomendations
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
@@ -12,6 +12,28 @@ class LeafDiseaseForm(forms.ModelForm):
     class Meta:
         model = LeafImage
         fields = ['crop_name','description','image']
+class CropRecommendationForm(forms.ModelForm):
+    class Meta:
+        model = Crop_recomendations
+        fields = ['nitrogen', 'phosphorus', 'potassium', 'temperature', 'humidity', 'ph', 'rainfall']
+        labels = {
+            'nitrogen': 'Nitrogen',
+            'phosphorus': 'Phosphorus',
+            'potassium': 'Potassium',
+            'temperature': 'Temperature (°C)',
+            'humidity': 'Humidity (%)',
+            'ph': 'pH',
+            'rainfall': 'Rainfall (mm)',
+        }
+        widgets = {
+            'nitrogen': forms.NumberInput(attrs={'placeholder': 'Enter Nitrogen', 'class': 'form-control', 'step': '0'}),
+            'phosphorus': forms.NumberInput(attrs={'placeholder': 'Enter Phosphorus', 'class': 'form-control', 'step': '0'}),
+            'potassium': forms.NumberInput(attrs={'placeholder': 'Enter Potassium', 'class': 'form-control', 'step': '0'}),
+            'temperature': forms.NumberInput(attrs={'placeholder': 'Enter Temperature in °C', 'class': 'form-control', 'step': '0.01'}),
+            'humidity': forms.NumberInput(attrs={'placeholder': 'Enter Humidity in %', 'class': 'form-control', 'step': '0.01'}),
+            'ph': forms.NumberInput(attrs={'placeholder': 'Enter pH value', 'class': 'form-control', 'step': '0.01'}),
+            'rainfall': forms.NumberInput(attrs={'placeholder': 'Enter Rainfall in mm', 'class': 'form-control', 'step': '0.01'}),
+        }
 
 
 class SupplierForm(forms.ModelForm):

@@ -14,6 +14,7 @@ urlpatterns = [
     path('order/success/', views.order_success, name='order_success'),  
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('predict/', views.predict_view, name='crop_recommendation'),
     # path('weather/', views.weather_view, name='weather'),
 ]
 

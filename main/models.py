@@ -10,6 +10,23 @@ class LeafImage(models.Model):
 
     def __str__(self):
         return f"{self.crop_name} - {self.upload_date}"
+    
+from django.db import models
+
+class Crop_recomendations(models.Model):
+    nitrogen = models.FloatField()
+    phosphorus = models.FloatField()
+    potassium = models.FloatField()
+    temperature = models.FloatField()
+    humidity = models.FloatField()
+    ph = models.FloatField()
+    rainfall = models.FloatField()
+    recommended_crop = models.CharField(max_length=50)
+    prediction_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Prediction {self.id} - {self.recommended_crop}"
+
 
 class Supplier(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE)  # Link Supplier to User
