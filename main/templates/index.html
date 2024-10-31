@@ -49,121 +49,60 @@
         <h1>Farm <span class="whitespace">Details</span></h1>
         <div class="input">
             {% if user_type == 'farmer' %}
-                <input type="text" id="farm_size" placeholder="Enter farm size" value="{{ farm_acreage }}" readonly>
-                <input type="text" id="location" placeholder="Enter  farm Location" value="{{ location }}" readonly>
-                <input type="text" id="crop" placeholder="Crop Cultivated" value="{{ crop_cultivated }}" readonly>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="farmSize" placeholder="Enter farm size" value="{{ farm_acreage }}" readonly>
+                    <label for="farmSize">Farm Size</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="location" placeholder="Enter farm location" value="{{ location }}" readonly>
+                    <label for="location">Farm Location</label>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cropCultivated" placeholder="Crop Cultivated" value="{{ crop_cultivated }}" readonly>
+                    <label for="cropCultivated">Crop grown</label>
+                </div>
             {% else %}
                 <p class="text-muted">No farm details available for this user.</p>
             {% endif %}
         </div>
-        
-    </div> 
+    </div>
+    
     <div class="item item5">
-        <h1>Weather <span class="whitespace">Data</span></h1>
+        <h1>Crop<span class="whitespace">Yeild Prediction</span></h1>
         <div class="content5">
-            <p>7.3%</p>
+            <p>78.3%</p>
             <div class="circle"></div>
         </div>
     </div>
 
     <div class="item item6">
-        <h1>Marketplace <span class="whitespace"></span></h1>
-        <!-- Produce Products -->
-        <h2>Farmer Produce</h2>
-        <div class="product-list">
-            <div class="product-card produce">
-                <img src="https://images.pexels.com/photos/7543111/pexels-photo-7543111.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Corn" class="product-image">
-                <h4>Corn</h4>
-                <p>Price: KES 200 per kg</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card produce">
-                <img src="https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Potatoes" class="product-image">
-                <h4>Potatoes</h4>
-                <p>Price: KES 70 per kg</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card produce">
-                <img src="https://images.pexels.com/photos/26447849/pexels-photo-26447849/free-photo-of-bunch-of-bananas.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Ripe Bananas" class="product-image">
-                <h4>Ripe Bananas</h4>
-                <p>Price: KES 80 per kg</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card produce">
-                <img src="https://images.pexels.com/photos/9648035/pexels-photo-9648035.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Green Bananas" class="product-image">
-                <h4>Green Bananas</h4>
-                <p>Price: KES 60 per kg</p>
-                <button>Add to Cart</button>
-            </div>
+        <h1>Market Place <span class="whitespace"></span></h1>
+        <!-- <img src="{% static 'images/img1.jpg'%}" alt=""> -->
+        <h3>Have any produe?,in need of any supplies?</h3>
+        <p>
+            Buy Farm suppliers such as Pestcides,Fertilizers and gardenining tools.Also advertise and sell your farm produce here.
+        </p>
+        <button type="submit">Visit</button>
+        <div class="spaces">
+            
         </div>
-
-        <h2>Supplier Products</h2>
-        <div class="product-list">
-            <div class="product-card supplier">
-                <img src="https://agropests.com/_next/image?url=https%3A%2F%2Fagropests-strapi.s3.eu-central-1.amazonaws.com%2FMaize_H_614_D_5543a13d53.png&w=200&q=75" alt="Maize Seeds" class="product-image">
-                <h4>Maize Seeds</h4>
-                <p>Price: KES 400 per pack</p>
-                <button>Add to Cart</button>
+            
             </div>
-            <div class="product-card supplier">
-                <img src="https://agropests.com/_next/image?url=https%3A%2F%2Fagropests-strapi.s3.eu-central-1.amazonaws.com%2FHybrix_F1_91709e35e7.png&w=200&q=75" alt="Corn Seeds" class="product-image">
-                <h4>Corn Seeds</h4>
-                <p>Price: KES 1200 for 100g</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card supplier">
-                <img src="https://agropests.com/_next/image?url=https%3A%2F%2Fagropests-strapi.s3.eu-central-1.amazonaws.com%2FRosecoco_2kg_8afec04530.png&w=200&q=75" alt="Beans" class="product-image">
-                <h4>Beans</h4>
-                <p>Price: KES 700 for 2kgs</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card supplier">
-                <h4>Fertilizers</h4>
-                <p>Price: KES 800 per bag</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card supplier">
-                <h4>Pesticides</h4>
-                <p>Price: KES 600 per bottle</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card supplier">
-                <h4>Farm Tools</h4>
-                <p>Price: KES 1500 per set</p>
-                <button>Add to Cart</button>
-            </div>
+        <div class="item item7">
+            <a href="{% url 'crop_recommendation' %}">
+                <h1>
+                    Crop <span class="whitespace"> recommendation</span>
+                   
+                </h1>
+                <p> Get to know which crops best performs around your region.Provide basic weather,soil and farm practices and an AI algorithm shall suggest what crop shall best perform on your farm</p>
+                
+                <div id="chart_div" style="width: 300px; height: 300px;"></div>
+            </a>
         </div>
-    </div>
+            
 
-    <div class="item item7">
-        <a href="{% url 'crop_recommendation' %}"> 
-            <h1>Crop <span class="whitespace">Recommendation</span></h1>
-            <div id="chart_div" style="width: 300px; height: 300px;"></div>
-        </a>
-    </div>
-</div>
-
-<div class="add-product">
-    <h2>Add Your Produce</h2>
-    <form method="POST" action="{% url 'add_produce' %}">
-        {% csrf_token %}
-        <input type="text" name="produce_name" placeholder="Produce Name" required>
-        <input type="number" name="price" placeholder="Price (KES)" required>
-        <input type="file" name="image" required>
-        <button type="submit">Add Produce</button>
-    </form>
-</div>
-
-<div class="add-supplier-product">
-    <h2>Add Supplier Product</h2>
-    <form method="POST" action="{% url 'add_supplier_product' %}">
-        {% csrf_token %}
-        <input type="text" name="product_name" placeholder="Product Name" required>
-        <input type="number" name="price" placeholder="Price (KES)" required>
-        <input type="file" name="image" required>
-        <button type="submit">Add Product</button>
-    </form>
-</div>
 
 {% endblock %}
 
@@ -172,26 +111,4 @@
 <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
 
-<style>
-    .product-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
 
-    .product-card {
-        width: calc(25% - 10px); /* Adjust width for 4 cards in a row */
-        box-sizing: border-box;
-        text-align: center;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        background-color: #f9f9f9;
-    }
-
-    .product-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
-    }
-</style>

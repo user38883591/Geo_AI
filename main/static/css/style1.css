@@ -173,7 +173,8 @@ input {
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: auto;
         gap: 10px;
-
+        
+        
     }
 
     .item {
@@ -248,4 +249,34 @@ nav ul li a:hover {
 .content {
     margin: 20px;
     font-family: Arial, sans-serif;
+
+}
+
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.product-card {
+    width: calc(25% - 10px); /* Adjust width for 4 cards in a row */
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+/* Image Styling */
+.item img {
+    width: 10%;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
