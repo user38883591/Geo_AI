@@ -70,12 +70,12 @@ class UserRegisterForm(UserCreationForm):
         user_type = self.cleaned_data.get('user_type')
         profile, created = Profile.objects.get_or_create(
             user=user,
-            defaults={
+             defaults={
                 'user_type': user_type,
                 'farm_acreage': self.cleaned_data.get('farm_acreage') if user_type == 'farmer' else None,
-                'crop_cultivated': self.cleaned_data.get('crop_cultivated') if user_type == 'farmer' else None,
+                 'crop_cultivated': self.cleaned_data.get('crop_cultivated') if user_type == 'farmer' else None,
                 'location': self.cleaned_data.get('location') if user_type == 'farmer' else None,
-            }
+             }
         )
         
         if not created:

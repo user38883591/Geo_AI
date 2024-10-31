@@ -56,15 +56,26 @@
         <h1>Farm <span class="whitespace">Details</span></h1>
         <div class="input">
             {% if user_type == 'farmer' %}
-                <input type="text" id="farm_size" placeholder="Enter farm size" value="{{ farm_acreage }}" readonly>
-                <input type="text" id="location" placeholder="Enter  farm Location" value="{{ location }}" readonly>
-                <input type="text" id="crop" placeholder="Crop Cultivated" value="{{ crop_cultivated }}" readonly>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="farmSize" placeholder="Enter farm size" value="{{ farm_acreage  }} Ha" readonly>
+                    <label for="farmSize">Farm Size</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="location" placeholder="Enter farm location" value="{{ location }}" readonly>
+                    <label for="location">Farm Location</label>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cropCultivated" placeholder="Crop Cultivated" value="{{ crop_cultivated }}" readonly>
+                    <label for="cropCultivated">Crop grown</label>
+                </div>
             {% else %}
-                <p>No farm details available for this user.</p>
+                <p class="text-muted">No farm details available for this user.</p>
             {% endif %}
         </div>
-        
-    </div> 
+    </div>
+     
     <div class="item item5">
         <h1>Weather <span class="whitespace">Data</span></h1>
         <div class="content5">
