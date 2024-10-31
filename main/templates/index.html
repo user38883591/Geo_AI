@@ -11,71 +11,53 @@
 <div class="grid">
     <div class="item item1">
         <h1>Farmer's Dashboard</h1>
-        <h3>Welcome <span>{{user.username}}</span></h3>
-        <p>Perform Crophealth Analysis,Get Weather Data Insights,as well as See what crops would best perform in your farm. </p>
+        <h3>Welcome <span>{{ user.username }}</span></h3>
+        <p>Perform Crophealth Analysis, Get Weather Data Insights, as well as See what crops would best perform in your farm.</p>
         <button>Get Started</button>
     </div>
+
     <div class="item item2">
-        <!-- Section: Weather Data -->
-    <section>
-        <h2>Weather Insights</h2>
-        <form method="GET" action="{% url 'index' %}">
-            <label for="city">Enter your city:</label>
-            <input type="text" name="city" id="city" placeholder="City name" required>
-            <button type="submit">Get Weather</button>
-        </form>
+        <section>
+            <h2>Weather Insights</h2>
+            <form method="GET" action="{% url 'index' %}">
+                <label for="city">Enter your city:</label>
+                <input type="text" name="city" id="city" placeholder="City name" required>
+                <button type="submit">Get Weather</button>
+            </form>
 
-        {% if weather_data %}
-            <img src="http://openweathermap.org/img/wn/{{ weather_data.weather.0.icon }}@2x.png" alt="Weather icon">
-            <h3>Weather in {{ city }}</h3>
-            <p>Temperature: {{ weather_data.main.temp }} °C</p>
-            <p>Weather: {{ weather_data.weather.0.description }}</p>
-            <p>Humidity: {{ weather_data.main.humidity }}%</p>
-            <p>Wind Speed: {{ weather_data.wind.speed }} m/s</p>
-            
-        {% elif city %}
-            <p>Could not retrieve weather data for {{ city }}.</p>
-        {% endif %}
-    </section>
-     <!-- Section: Weather Data -->
-
+            {% if weather_data %}
+                <img src="http://openweathermap.org/img/wn/{{ weather_data.weather.0.icon }}@2x.png" alt="Weather icon">
+                <h3>Weather in {{ city }}</h3>
+                <p>Temperature: {{ weather_data.main.temp }} °C</p>
+                <p>Weather: {{ weather_data.weather.0.description }}</p>
+                <p>Humidity: {{ weather_data.main.humidity }}%</p>
+                <p>Wind Speed: {{ weather_data.wind.speed }} m/s</p>
+            {% elif city %}
+                <p>Could not retrieve weather data for {{ city }}.</p>
+            {% endif %}
+        </section>
     </div>
+
     <div class="item item3">
         <a href="{% url 'image_leaf_upload' %}">
-            <h1>health <span class="whitespace">
-                analysis
-            </span>
-        </h1>
-        <div id="regions_div" style="width: 300px; height: 400px;"></div>
+            <h1>Health <span class="whitespace">Analysis</span></h1>
+            <div id="regions_div" style="width: 300px; height: 400px;"></div>
         </a>
-        
     </div>
 
-    
     <div class="item item4">
         <h1>Farm <span class="whitespace">Details</span></h1>
         <div class="input">
             {% if user_type == 'farmer' %}
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="farmSize" placeholder="Enter farm size" value="{{ farm_acreage  }} Ha" readonly>
-                    <label for="farmSize">Farm Size</label>
-                </div>
-                
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="location" placeholder="Enter farm location" value="{{ location }}" readonly>
-                    <label for="location">Farm Location</label>
-                </div>
-    
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="cropCultivated" placeholder="Crop Cultivated" value="{{ crop_cultivated }}" readonly>
-                    <label for="cropCultivated">Crop grown</label>
-                </div>
+                <input type="text" id="farm_size" placeholder="Enter farm size" value="{{ farm_acreage }}" readonly>
+                <input type="text" id="location" placeholder="Enter  farm Location" value="{{ location }}" readonly>
+                <input type="text" id="crop" placeholder="Crop Cultivated" value="{{ crop_cultivated }}" readonly>
             {% else %}
                 <p class="text-muted">No farm details available for this user.</p>
             {% endif %}
         </div>
-    </div>
-     
+        
+    </div> 
     <div class="item item5">
         <h1>Weather <span class="whitespace">Data</span></h1>
         <div class="content5">
@@ -83,31 +65,133 @@
             <div class="circle"></div>
         </div>
     </div>
+
     <div class="item item6">
-        <h1>Market Place <span class="whitespace"></span></h1>
-        <div class="spaces">
-            <div class="space1">1</div>
-            <div class="space1">2</div>
-            <div class="space1">3</div>
-            <div class="space1">4</div>
-            <div class="space1">5</div>
-            <div class="space1">6</div>
-            <div class="space1">7</div>
-            <div class="space1">8</div>
-            <div class="space1">9</div>
+        <h1>Marketplace <span class="whitespace"></span></h1>
+        <!-- Produce Products -->
+        <h2>Farmer Produce</h2>
+        <div class="product-list">
+            <div class="product-card produce">
+                <img src="https://images.pexels.com/photos/7543111/pexels-photo-7543111.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Corn" class="product-image">
+                <h4>Corn</h4>
+                <p>Price: KES 200 per kg</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card produce">
+                <img src="https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Potatoes" class="product-image">
+                <h4>Potatoes</h4>
+                <p>Price: KES 70 per kg</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card produce">
+                <img src="https://images.pexels.com/photos/26447849/pexels-photo-26447849/free-photo-of-bunch-of-bananas.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Ripe Bananas" class="product-image">
+                <h4>Ripe Bananas</h4>
+                <p>Price: KES 80 per kg</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card produce">
+                <img src="https://images.pexels.com/photos/9648035/pexels-photo-9648035.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Green Bananas" class="product-image">
+                <h4>Green Bananas</h4>
+                <p>Price: KES 60 per kg</p>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+
+        <h2>Supplier Products</h2>
+        <div class="product-list">
+            <div class="product-card supplier">
+                <img src="https://agropests.com/_next/image?url=https%3A%2F%2Fagropests-strapi.s3.eu-central-1.amazonaws.com%2FMaize_H_614_D_5543a13d53.png&w=200&q=75" alt="Maize Seeds" class="product-image">
+                <h4>Maize Seeds</h4>
+                <p>Price: KES 400 per pack</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card supplier">
+                <img src="https://agropests.com/_next/image?url=https%3A%2F%2Fagropests-strapi.s3.eu-central-1.amazonaws.com%2FHybrix_F1_91709e35e7.png&w=200&q=75" alt="Corn Seeds" class="product-image">
+                <h4>Corn Seeds</h4>
+                <p>Price: KES 1200 for 100g</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card supplier">
+                <img src="https://agropests.com/_next/image?url=https%3A%2F%2Fagropests-strapi.s3.eu-central-1.amazonaws.com%2FRosecoco_2kg_8afec04530.png&w=200&q=75" alt="Beans" class="product-image">
+                <h4>Beans</h4>
+                <p>Price: KES 700 for 2kgs</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card supplier">
+                <h4>Fertilizers</h4>
+                <p>Price: KES 800 per bag</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card supplier">
+                <h4>Pesticides</h4>
+                <p>Price: KES 600 per bottle</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card supplier">
+                <h4>Farm Tools</h4>
+                <p>Price: KES 1500 per set</p>
+                <button>Add to Cart</button>
+            </div>
         </div>
     </div>
+
     <div class="item item7">
         <a href="{% url 'crop_recommendation' %}"> 
-            <h1>Crop <span class="whitespace">Recommendation </span></h1>
+            <h1>Crop <span class="whitespace">Recommendation</span></h1>
             <div id="chart_div" style="width: 300px; height: 300px;"></div>
         </a>
     </div>
 </div>
+
+<div class="add-product">
+    <h2>Add Your Produce</h2>
+    <form method="POST" action="{% url 'add_produce' %}">
+        {% csrf_token %}
+        <input type="text" name="produce_name" placeholder="Produce Name" required>
+        <input type="number" name="price" placeholder="Price (KES)" required>
+        <input type="file" name="image" required>
+        <button type="submit">Add Produce</button>
+    </form>
+</div>
+
+<div class="add-supplier-product">
+    <h2>Add Supplier Product</h2>
+    <form method="POST" action="{% url 'add_supplier_product' %}">
+        {% csrf_token %}
+        <input type="text" name="product_name" placeholder="Product Name" required>
+        <input type="number" name="price" placeholder="Price (KES)" required>
+        <input type="file" name="image" required>
+        <button type="submit">Add Product</button>
+    </form>
+</div>
+
 {% endblock %}
 
 {% block extend_footer %}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="{% static 'js/script.js' %}"></script>
-{% endblock %} 
- 
+{% endblock %}
+
+<style>
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .product-card {
+        width: calc(25% - 10px); /* Adjust width for 4 cards in a row */
+        box-sizing: border-box;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+</style>
