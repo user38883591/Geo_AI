@@ -55,6 +55,9 @@ class UserRegisterForm(UserCreationForm):
     )
     
     user_type = forms.ChoiceField(choices=USER_TYPES, required=True)
+    farm_acreage = forms.DecimalField(required=False, max_digits=10, decimal_places=2)
+    crop_cultivated = forms.CharField(required=False, max_length=100)
+    location = forms.CharField(required=False, max_length=100)
 
     class Meta:
         model = User
@@ -62,17 +65,25 @@ class UserRegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.save()  # Save the user first
-        
-        # Get the selected user type from the form data
+        user.save()
+
         user_type = self.cleaned_data.get('user_type')
+        profile, created = Profile.objects.get_or_create(
+            user=user,
+            defaults={
+                'user_type': user_type,
+                'farm_acreage': self.cleaned_data.get('farm_acreage') if user_type == 'farmer' else None,
+                'crop_cultivated': self.cleaned_data.get('crop_cultivated') if user_type == 'farmer' else None,
+                'location': self.cleaned_data.get('location') if user_type == 'farmer' else None,
+            }
+        )
         
-        # Check if the profile already exists before creating one
-        profile, created = Profile.objects.get_or_create(user=user, defaults={'user_type': user_type})
-        
-        # If the profile already exists, update its user_type
         if not created:
             profile.user_type = user_type
+            if user_type == 'farmer':
+                profile.farm_acreage = self.cleaned_data.get('farm_acreage')
+                profile.crop_cultivated = self.cleaned_data.get('crop_cultivated')
+                profile.location = self.cleaned_data.get('location')
             profile.save()
 
         return user

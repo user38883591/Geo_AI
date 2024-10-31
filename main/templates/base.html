@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Application{% endblock %}</title>
+
+    <!-- ================================
+    Start CSS
+    ================================= -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.css">
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    {% block extend_header %}{% endblock %}
+    <!-- ================================
+    End CSS
+    ================================= -->
+</head>
+<body>
+    {% include 'messages.html' %}
+    <!-- Navigation bar -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+
+            {% if user.is_authenticated %}
+                {% if user.profile.user_type == 'supplier' %}
+                    <li><a href="{% url 'supplier_dashboard' %}">Supplier Dashboard</a></li>
+                {% elif user.profile.user_type == 'farmer' %}
+                    <li><a href="{% url 'farmers_dashboard' %}">Farmer's Market</a></li>
+                {% endif %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'admin:index' %}">Admin Dashboard</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Main content block for child templates -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- ================================
+    Start Scripts
+    ================================= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extend_footer %}{% endblock %}
+    <!-- ================================
+    End Scripts
+    ================================= -->
+</body>
+</html>

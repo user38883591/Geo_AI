@@ -9,6 +9,7 @@ from .forms import LeafDiseaseForm,SupplierForm,UserRegisterForm,ProductForm,Cro
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+import logging
 from django.http import HttpResponseForbidden
 from decimal import Decimal
 from django.contrib import messages
@@ -20,14 +21,38 @@ import io
 
 
 
+
 def Home(request):
     user_type = None
-    if request.user.is_authenticated:
+    farm_acreage = None
+    crop_cultivated = None
+    location = None
     
-        user_type = getattr(request.user.profile, 'user_type', None)
+    if request.user.is_authenticated:
+        profile = getattr(request.user, 'profile', None)
+        user_type = profile.user_type if profile else None
 
-    return render(request, 'index.html', {'user_type': user_type})
+        # Fetch farm details if the user is a farmer
+        if user_type == 'farmer':
+            farm_acreage = profile.farm_acreage
+            crop_cultivated = profile.crop_cultivated
+            location = profile.location
 
+    city = request.GET.get('city', 'YourDefaultCity')
+    weather_data = get_weather_data(city) if city else None
+
+    return render(request, 'index.html', {
+        'user_type': user_type,
+        'city': city,
+        'weather_data': weather_data,
+        'farm_acreage': farm_acreage,
+        'crop_cultivated': crop_cultivated,
+        'location': location
+    })
+
+
+ 
+ 
  #Weather API
 
 
@@ -53,8 +78,7 @@ def farmer_dashboard(request):
     return render(request, 'farmers_dashboard.html', {
         'products': products,
         'orders': orders,
-        'weather_data': weather_data,
-        'city': city
+        
     })
     
 
@@ -74,35 +98,26 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
-
+logger = logging.getLogger(__name__)
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        # print(f"User type: {request.user.profile.user_type}")
-        
+
         if user is not None:
-        
             login(request, user)
-            
-            # Check the user profile type and redirect appropriately
+            messages.success(request, f"Welcome back, {user.username}!")
+            # Redirect based on user type
             if hasattr(user, 'profile'):
-                if user.profile.user_type == 'farmer':
-                    return redirect('farmers_dashboard')  
-                elif user.profile.user_type == 'supplier':
-                    return redirect('supplier_dashboard') 
+                return redirect('index' if user.profile.user_type == 'farmer' else 'supplier_dashboard')
             else:
-                # Handle case where profile does not exist
                 logout(request)
                 messages.error(request, "Profile not found. Please contact support.")
                 return redirect('login')
         else:
-            # Failed authentication
             messages.error(request, "Invalid username or password.")
             return redirect('login')
-    
-    # Render login page for GET requests
     return render(request, 'login.html')
 
 

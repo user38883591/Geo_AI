@@ -2,12 +2,41 @@
 <html>
 <head>
     <title>Register</title>
+    <script>
+        function toggleFarmFields() {
+            const userType = document.getElementById("id_user_type").value;
+            const farmDetails = document.getElementById("farm-details");
+
+            if (userType === "farmer") {
+                farmDetails.style.display = "block";
+            } else {
+                farmDetails.style.display = "none";
+            }
+        }
+
+        window.onload = function() {
+            toggleFarmFields();  // Initialize based on initial selection
+            document.getElementById("id_user_type").addEventListener("change", toggleFarmFields);
+        }
+    </script>
 </head>
 <body>
     <h2>Register</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+
+        <div id="farm-details" style="display:none;">
+            <label for="id_farm_acreage">Farm Acreage:</label>
+            <input type="number" step="0.01" name="farm_acreage" id="id_farm_acreage">
+            
+            <label for="id_crop_cultivated">Crop Cultivated:</label>
+            <input type="text" name="crop_cultivated" id="id_crop_cultivated">
+            
+            <label for="id_location">Location:</label>
+            <input type="text" name="location" id="id_location">
+        </div>
+
         <button type="submit">Register</button>
     </form>
 </body>

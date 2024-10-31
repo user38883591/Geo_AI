@@ -1,0 +1,251 @@
+:root {
+    --margin: 10px;
+    --bg-color: #dbe9ea;
+}
+
+body {
+    margin: var(--margin);
+    box-sizing: border-box;
+    background-color: #dbe9ea;
+}
+
+header {
+    color: #1c0505;
+    text-align: center;
+}
+
+.whitespace {
+    white-space: nowrap;
+}
+
+button {
+    background-color: #f46666;
+    border: none;
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff7f7f;
+}
+
+.spaces {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+
+}
+
+.space1 {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 70%;
+    background-color: hwb(181 11% 2% / 0.957);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+
+}
+
+.item4 {
+    display: block;
+    margin: var(--margin);
+}
+
+.item4 button,
+.item3 button {
+    margin-top: var(--margin);
+}
+
+/* .chart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.segment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+    transform-origin: 50% 50%;
+}
+
+.segment:nth-child(1) {
+    background-color: #ffa34d;
+    transform: rotate(0deg);
+}
+
+.segment:nth-child(2) {
+    background-color: #ffa34d;
+    transform: rotate(90deg);
+}
+
+.segment:nth-child(3) {
+    background-color: #4db8ff;
+    transform: rotate(180deg);
+}
+
+.segment:nth-child(4) {
+    background-color: #4db8ff;
+    transform: rotate(270deg);
+}
+
+.pointer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    background-color: #333;
+    border-radius: 50% 50% 50% 50%/705 70% 305 30%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.pointer::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+} */
+.item1 {
+    position: relative;
+
+}
+
+#piechart {
+    width: 100px;
+    height: 100px;
+
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    background: conic-gradient(#ffa34d 0deg 180deg, #4db8ff 180deg 360deg);
+    border-radius: 50px;
+    position: relative;
+
+}
+
+.circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+input {
+    width: 70%;
+    height: 30px;
+    border: none;
+    border-radius: 2px;
+    margin-top: 10px;
+    padding: 10px;
+
+}
+
+
+
+@media screen and (min-width:640px) {
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+
+    }
+
+    .item {
+        padding: 20px;
+        background-color: #f4f1eef4;
+        border-radius: 5px;
+
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .item1 {
+        grid-column: span 2;
+    }
+
+    .item2 {
+        grid-row: span 1;
+    }
+
+    .item3 {
+        grid-row-start: 2;
+        grid-row: span 3;
+    }
+
+    .content5 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .circle {
+        position: absolute;
+        left: 70%
+    }
+
+    .item5 p {
+        font-size: 30px;
+        font-weight: bolder;
+        text-align: center;
+    }
+
+}
+
+/* Styling for the nav bar */
+nav {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for the main content */
+.content {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
